@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import useLocalStorageState from "use-local-storage-state";
 import * as Yup from "yup";
+import { useState } from "react";
 const AllSchema = Yup.object().shape({
   firstName: Yup.string()
     .min(2, "Too Short!")
@@ -12,8 +13,10 @@ const AllSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  phoneNumber: Yup.string().required("Required"),
-  address: Yup.string().required("Required"),
+  profilPict: Yup.string()
+  .url('Invalid URL')
+  .matches(/.(jpg|jpeg|png|gif)$/, 'Invalid image URL')
+  .required('Image URL is required'),
 });
 
 export default function Login() {
@@ -22,6 +25,22 @@ export default function Login() {
   });
   const navigate = useNavigate();
   const updatevalue = (values) => setValue(values);
+
+  // images
+
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
+    setSelectedImage(imageFile);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (selectedImage) {
+      console.log("Image selected:", selectedImage);
+    }
+  };
 
   return (
     <>
@@ -32,8 +51,7 @@ export default function Login() {
             firstName: "",
             lastName: "",
             email: "",
-            phoneNumber: "",
-            address: "",
+            profilPict: "",
           }}
           validationSchema={AllSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -97,12 +115,12 @@ export default function Login() {
                 />
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label
                   htmlFor="phoneNumber"
                   className="block text-gray-700 font-bold mb-2"
                 >
-                  Phone number
+                  Profile Picture
                 </label>
                 <Field
                   type="number"
@@ -114,24 +132,28 @@ export default function Login() {
                   component="div"
                   className="error"
                 />
-              </div>
+              </div> */}
+
               <div className="mb-4">
-                <label
-                  htmlFor="address"
-                  className="block text-gray-700 font-bold mb-2"
-                >
-                  address
-                </label>
-                <Field
-                  name="address"
-                  className="w-full px-3 py-2 border rounded-lg resize-none"
-                  rows="4"
-                />
-                <ErrorMessage
-                  name="address"
-                  component="div"
-                  className="error"
-                />
+                <h2>Upload Image</h2>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+                {selectedImage && (
+                  <div>
+                    <h3>Preview:</h3>
+                    <img
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="Preview"
+                      style={{ maxWidth: "100%", maxHeight: "200px" }}
+                    />
+                  </div>
+                )}
               </div>
               <div className="mt-6">
                 <button
