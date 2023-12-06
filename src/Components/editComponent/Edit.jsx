@@ -25,7 +25,6 @@ function Edit() {
   const updatevalue = (values) => setValue(values);
 
   const storedValues = JSON.parse(localStorage.getItem('user'));
-  console.log(storedValues.firstName);
 
   
   return (
@@ -37,8 +36,7 @@ function Edit() {
             firstName: storedValues.firstName,
             lastName: storedValues.lastName,
             email: storedValues.email,
-            phoneNumber: storedValues.phoneNumber,
-            address: storedValues.address,
+            profilPict: storedValues.profilPict,
           }}
           validationSchema={AllSchema}
           onSubmit={(values, { setSubmitting }) => {
@@ -107,7 +105,7 @@ function Edit() {
                   htmlFor="phoneNumber"
                   className="block text-gray-700 font-bold mb-2"
                 >
-                  Phone number
+                  Profile Picture
                 </label>
                 <Field
                   type="number"
@@ -120,26 +118,7 @@ function Edit() {
                   className="error"
                 />
               </div>
-              <div className="mb-4">
-                <label
-                  htmlFor="address"
-                  className="block text-gray-700 font-bold mb-2"
-                >
-                  address
-                </label>
-                <Field
-                  name="address"
-                  className="w-full px-3 py-2 border rounded-lg resize-none"
-                  rows="4"
-                />
-                <ErrorMessage
-                  name="address"
-                  component="div"
-                  className="error"
-                />
-              </div>
               <div className="mt-6">
-                {/* <Link to="/Display"> */}
                 <button
                   disabled={isSubmitting}
                   type="submit"
@@ -147,7 +126,6 @@ function Edit() {
                 >
                   Create Profile
                 </button>
-                {/* </Link> */}
               </div>
             </Form>
           )}

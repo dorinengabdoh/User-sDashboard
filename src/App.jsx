@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 // import { useState } from "react";
 import "./App.css";
 import Landing from "./Components/Landpage/First_page";
-import Login from "./Components/Loginpage/loginpage";
+import Login from "./Components/Loginpage/Loginpage";
 import Display from "./Components/Displaypage/display";
 import Update from "./Components/Updatelogin/update";
 import Edit from "./Components/editComponent/Edit";

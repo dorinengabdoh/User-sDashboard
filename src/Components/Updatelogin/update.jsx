@@ -19,9 +19,20 @@ export default function update() {
   const values = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   console.log("here is value", values);
-  // }, []);
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const handleImageChange = (event) => {
+    const imageFile = event.target.files[0];
+    setSelectedImage(imageFile);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (selectedImage) {
+      console.log("Image selected:", selectedImage);
+    }
+  };
+
 
   return (
     <>
@@ -132,6 +143,27 @@ export default function update() {
                   component="div"
                   className="error"
                 />
+              </div>
+              <div className="mb-4">
+                <h2>Upload Image</h2>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                  <button type="submit">Submit</button>
+                </form>
+                {selectedImage && (
+                  <div>
+                    <h3>Preview:</h3>
+                    <img
+                      src={URL.createObjectURL(selectedImage)}
+                      alt="Preview"
+                      style={{ maxWidth: "100%", maxHeight: "200px" }}
+                    />
+                  </div>
+                )}
               </div>
               <div className="mt-6">
                 <Link to="/Loginpage">

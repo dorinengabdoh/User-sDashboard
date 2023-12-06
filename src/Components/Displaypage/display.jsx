@@ -30,10 +30,7 @@ export default function Display() {
               your Email is: {values.email}
             </p>
             <p className="text-gray-700 text-2xl	pt-2 w-full px-3 py-2 border text-700 italic">
-              your phoneNumber is: {values.phoneNumber}
-            </p>
-            <p className="text-gray-700 text-2xl	pt-2 w-full px-3 py-2 border text-700 italic">
-              your Address is: {values.address}
+              your ProfilPict is: {values.Profilpict}
             </p>
           </div>
         </div>
