@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import useLocalStorageState from "use-local-storage-state";
+import { useState } from 'react';
 import * as Yup from "yup";
 const AllSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -13,11 +14,11 @@ const AllSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  phoneNumber: Yup.string().required("Required"),
-  address: Yup.string().required("Required"),
 });
 
+
 function Edit() {
+  const [selectedImage, setSelectedImage] = useState(null);
   const [value, setValue] = useLocalStorageState("user", {
     defaultValue: {},
   });
@@ -25,6 +26,22 @@ function Edit() {
   const updatevalue = (values) => setValue(values);
 
   const storedValues = JSON.parse(localStorage.getItem('user'));
+  const newImageValue = (localStorage.getItem('uploadedImage'));
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageData = reader.result;
+        setSelectedImage(imageData);
+        // Store image data in localStorage
+        localStorage.setItem('uploadedImage', imageData);
+        console.log('Image uploaded and stored in localStorage.');
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
 
   
   return (
@@ -102,21 +119,23 @@ function Edit() {
               </div>
               <div className="mb-4">
                 <label
-                  htmlFor="phoneNumber"
+                  htmlFor="profilPict"
                   className="block text-gray-700 font-bold mb-2"
                 >
-                  Profile Picture
+                  Profil Picture
                 </label>
-                <Field
-                  type="number"
-                  name="phoneNumber"
-                  className="w-full px-3 py-2 border rounded-lg"
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
                 />
-                <ErrorMessage
-                  name="phoneNumber"
-                  component="div"
-                  className="error"
-                />
+                {(
+                  <div>
+                    <h2>Preview:</h2>
+                    <img src={selectedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                  </div>
+                )}
+                <ErrorMessage name="profilPict" component="div" className="error" />
               </div>
               <div className="mt-6">
                 <button

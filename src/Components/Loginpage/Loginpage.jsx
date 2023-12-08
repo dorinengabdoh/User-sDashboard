@@ -13,10 +13,6 @@ const AllSchema = Yup.object().shape({
     .max(50, "Too Long!")
     .required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
-  profilPict: Yup.string()
-  .url('Invalid URL')
-  .matches(/.(jpg|jpeg|png|gif)$/, 'Invalid image URL')
-  .required('Image URL is required'),
 });
 
 export default function Login() {
@@ -27,20 +23,24 @@ export default function Login() {
   const updatevalue = (values) => setValue(values);
 
   // images
-
   const [selectedImage, setSelectedImage] = useState(null);
 
   const handleImageChange = (event) => {
-    const imageFile = event.target.files[0];
-    setSelectedImage(imageFile);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (selectedImage) {
-      console.log("Image selected:", selectedImage);
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const imageData = reader.result;
+        setSelectedImage(imageData);
+        // Store image data in localStorage
+        localStorage.setItem('uploadedImage', imageData);
+        console.log('Image uploaded and stored in localStorage.');
+      };
+      reader.readAsDataURL(file);
     }
   };
+
+
 
   return (
     <>
@@ -115,45 +115,25 @@ export default function Login() {
                 />
                 <ErrorMessage name="email" component="div" className="error" />
               </div>
-              {/* <div className="mb-4">
+              <div className="mb-4">
                 <label
-                  htmlFor="phoneNumber"
+                  htmlFor="profilPict"
                   className="block text-gray-700 font-bold mb-2"
                 >
-                  Profile Picture
+                  Profil Picture
                 </label>
-                <Field
-                  type="number"
-                  name="phoneNumber"
-                  className="w-full px-3 py-2 border rounded-lg"
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageChange}
                 />
-                <ErrorMessage
-                  name="phoneNumber"
-                  component="div"
-                  className="error"
-                />
-              </div> */}
-
-              <div className="mb-4">
-                <h2>Upload Image</h2>
-                <form onSubmit={handleSubmit}>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageChange}
-                  />
-                  <button type="submit">Submit</button>
-                </form>
-                {selectedImage && (
+                {(
                   <div>
-                    <h3>Preview:</h3>
-                    <img
-                      src={URL.createObjectURL(selectedImage)}
-                      alt="Preview"
-                      style={{ maxWidth: "100%", maxHeight: "200px" }}
-                    />
+                    <h2>Profil</h2>
+                    <img src={selectedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                   </div>
                 )}
+                <ErrorMessage name="profilPict" component="div" className="error" />
               </div>
               <div className="mt-6">
                 <button
