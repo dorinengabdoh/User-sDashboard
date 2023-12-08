@@ -130,7 +130,7 @@ export default function Login() {
                 {(
                   <div>
                     <h2>Profil</h2>
-                    <img src={selectedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+                    <img src={selectedImage} alt="" style={{ maxWidth: '100%', maxHeight: '200px' }} />
                   </div>
                 )}
                 <ErrorMessage name="profilPict" component="div" className="error" />

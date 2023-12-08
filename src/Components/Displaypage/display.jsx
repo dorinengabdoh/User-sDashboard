@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import image2 from "../../images/software-engineering-featured.jpg";
 
 export default function Display() {
   const values = JSON.parse(localStorage.getItem("user"));
@@ -14,33 +13,27 @@ export default function Display() {
 
   return (
     <>
-      <main className="bg-zinc-700 animate-pulse  space-x-4">
+      <main className="bg-zinc-700 animate-pulse  space-x-4 w-100">
+        <div className="hello">
         <div>
-          <h1>User`s Data</h1>
+          <h1>Hey, {values.firstName} Welcome </h1>
+        </div>
+        <div className="images">
+          {(
+            <div>
+              <img src={newImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+            </div>
+          )}
+        </div>
         </div>
         <div className="max-w-3xl rounded overflow-hidden shadow-lg bg-slate-300 ">
-          <img src={image2} alt="background image" className="" />
           <div className="px-6 py-4 font-bold">
             <p className="text-gray-700 text-2xl	pt-2  w-full px-3 py-2 border text-700 italic">
-              your FirstName is: {values.firstName}
+              {values.firstName} {values.lastName}
             </p>
             <p className="text-gray-700 text-2xl	pt-2 w-full px-3 py-2 border text-700 italic">
-              your LastName is: {values.lastName}
+              Email: {values.email}
             </p>
-            <p className="text-gray-700 text-2xl	pt-2 w-full px-3 py-2 border text-700 italic">
-              your Email is: {values.email}
-            </p>
-            <p className="text-gray-700 text-2xl	pt-2 w-full px-3 py-2 border text-700 italic">
-              your ProfilPict is: {values.Profilpict}
-            </p>
-            <div className="images">
-              {(
-                <div>
-                  <h2>Profil</h2>
-                  <img src={newImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
-                </div>
-              )}
-            </div>
           </div>
         </div>
 
