@@ -32,7 +32,6 @@ export default function Login() {
       reader.onload = () => {
         const imageData = reader.result;
         setSelectedImage(imageData);
-        // Store image data in localStorage
         localStorage.setItem('uploadedImage', imageData);
         console.log('Image uploaded and stored in localStorage.');
       };
