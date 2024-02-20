@@ -27,6 +27,7 @@ export default function Login() {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+    console.log(file, "here is file");
     if (file) {
       const reader = new FileReader();
       reader.onload = () => {
