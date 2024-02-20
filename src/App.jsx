@@ -6,6 +6,7 @@ import Login from "./Components/Loginpage/Loginpage";
 import Display from "./Components/Displaypage/display";
 import Update from "./Components/Updatelogin/update";
 import Edit from "./Components/editComponent/Edit";
+import { Delete } from "./Components/deleteComponent/delete";
 
 function App() {
   // const [formData, setFormData] = useState("Dorine");
@@ -21,6 +22,7 @@ function App() {
         <Route path="/dispaly" element={<Display />} />
         <Route path="/Updatepage" element={<Update />} />
         <Route path="/editpage" element={<Edit />} />
+        <Route path="/deletepage" element={<Delete />} />
       </Routes>
     </BrowserRouter>
   );
